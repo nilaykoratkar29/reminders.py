@@ -1,0 +1,67 @@
+from pygame import mixer
+from time import time
+import random
+#for logs in files
+def getdate():
+    import datetime
+    return datetime.datetime.now()
+#function for audio reminder
+def soundfunc(file, stopper):
+     mixer.init()
+     mixer.music.load(file)
+     mixer.music.play()
+     while True:
+      userinp=input()
+      if userinp==stopper:
+       mixer.music.stop()
+      break
+#time initialisation
+init_water = time()
+init_eyes = time()
+init_phy = time()
+#You can adjust time intervals accordingly (in seconds)
+waterint=10
+eyesint=30
+phyint=50
+
+got=["Going well!","keep it up!","Awesome!","Doing Good!"]
+
+mot=["A little healthy already",
+     "These are steps towards you fitness"
+     ,"Discipline is the key","You are getting closer to your goal"]
+
+print("Hello,We are here to help you a little to become healthy")
+print("Enter your name:")
+Name=input()
+
+while True:
+    #you need to create a file if copy pasting
+    with open("hplogs","a") as n:
+     for g in range(15):
+      if time()-init_water>waterint:
+        print("drink water . to stop alarm type 'drank'.")
+        soundfunc("water.mp3", "drank")
+        n.writelines("["+(str(getdate()))+"]"+"\tWater drank "+"\n")
+        cas = random.choice(got)
+        print(cas+"\t"+f"{Name}")
+        g+=1
+        init_water=time()
+     for e in range(15):
+      if time()-init_eyes>eyesint:
+        print("its time to do eyes exercise .To stop alarm enter 'eydone'.")
+        soundfunc("eyes.mp3", "eydone")
+        n.writelines("["+(str(getdate()))+"]"+"\tEye exercise done" +"\n")
+        bas = random.choice(got)
+        print(bas+"\t"+f"{Name}")
+        e+=1
+        init_eyes=time()
+     for p in range(10):
+      if time() - init_phy > phyint:
+            print("Time to do physical exercise.To stop alarm type 'pydone'.")
+            soundfunc("exercise.mp3", "pydone")
+            n.writelines("["+(str(getdate()))+"]"+"\tPhysical exercise done"+"\n")
+            res = random.choice(mot)
+            print(res)
+            p+=1
+            init_phy = time()
+
